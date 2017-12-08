@@ -16,6 +16,10 @@ namespace CoinStealer
         public readonly byte[] PrivateKey, PublicKey;
         public readonly string Address;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="privateKey">Private Key</param>
         public EthAddress(byte[] privateKey)
         {
             PrivateKey = privateKey;
@@ -29,6 +33,10 @@ namespace CoinStealer
         static X9ECParameters curve = SecNamedCurves.GetByName("secp256k1");
         static ECDomainParameters domain = new ECDomainParameters(curve.Curve, curve.G, curve.N, curve.H);
 
+        /// <summary>
+        /// Generate publicKey from PrivateKey
+        /// </summary>
+        /// <param name="privateKey">PrivateKey</param>
         public static byte[] ToPublicKey(byte[] privateKey)
         {
             BigInteger d = new BigInteger(privateKey);
@@ -37,7 +45,10 @@ namespace CoinStealer
             var publicParams = new ECPublicKeyParameters(q, domain);
             return publicParams.Q.GetEncoded(false).Skip(1).ToArray();
         }
-
+        /// <summary>
+        /// Do hash
+        /// </summary>
+        /// <param name="data">Data</param>
         byte[] CalculateHash(byte[] data)
         {
             KeccakDigest digest = new KeccakDigest(256);

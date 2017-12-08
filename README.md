@@ -1,1 +1,7 @@
 # CoinStealer
+
+POC para la entrade de fwhibbit
+
+No me hago responasble del uso indebido e irresponsable que se pueda hacer de este código
+
+https://www.fwhibbit.es/clipboard-el-ami…nadie-se-acuerda

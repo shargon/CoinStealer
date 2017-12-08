@@ -5,15 +5,22 @@ namespace CoinStealer
 {
     public static class ByteArrayExtensions
     {
-        public static string ToHex(this byte[] privateKey)
+        /// <summary>
+        /// Convert byte array to hex string
+        /// </summary>
+        /// <param name="input">Input</param>
+        public static string ToHex(this byte[] input)
         {
             StringBuilder sb = new StringBuilder();
-            foreach (byte b in privateKey)
+            foreach (byte b in input)
                 sb.Append(b.ToString("x2"));
 
             return sb.ToString();
         }
-
+        /// <summary>
+        /// Convert string in hex format to byte array
+        /// </summary>
+        /// <param name="input">Input</param>
         public static byte[] FromHex(this string input)
         {
             if (input.StartsWith("0x"))

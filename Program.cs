@@ -14,14 +14,17 @@ namespace CoinStealer
             if (Debugger.IsAttached)
             {
                 //args = new string[] { "--generate_all" };
-                args = new string[] { "--check_balances", "./Uniques/AddressesWithBalance.txt" };
+                //args = new string[] { "--check_balances", "./Uniques/Addresses.txt" };
                 //args = new string[] { "--payload", "https://raw.githubusercontent.com/shargon/CoinStealer/master/Samples/Addresses.txt?token=ADBW5Q7v31YTdQ8wlotdsdV93juszUEmks5aM6pJwA%3D%3D" };
             }
 #endif
 
             string toDo = args.FirstOrDefault();
+
             if (string.IsNullOrEmpty(toDo))
             {
+                // Print help
+
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("--generate_all");
                 Console.ForegroundColor = ConsoleColor.Yellow;
@@ -35,6 +38,7 @@ namespace CoinStealer
 
             switch (toDo.ToLowerInvariant())
             {
+                // Generate all possible addresses LIKE [??]*[??]
                 case "--generate_all":
                     {
                         GenerateUniqueAddress.Run();

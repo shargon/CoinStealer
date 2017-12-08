@@ -1,6 +1,6 @@
 # CoinStealer
 
-POC para la entrade de fwhibbit
+POC para la entrada de fwhibbit
 
 No me hago responasble del uso indebido e irresponsable que se pueda hacer de este código
 

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using CoinStealer.Actions;
+using System;
+using System.Diagnostics;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
 
 namespace CoinStealer
 {
@@ -11,65 +9,46 @@ namespace CoinStealer
     {
         static void Main(string[] args)
         {
-            Dictionary<string, EthAddress> list = new Dictionary<string, EthAddress>();
 
-            Action a = () =>
+#if DEBUG
+            if (Debugger.IsAttached)
             {
-                while (list.Count != ushort.MaxValue)
-                {
-                    using (CngKey hkey = CngKey.Create(CngAlgorithm.ECDsaP256, null, new CngKeyCreationParameters()
+                //args = new string[] { "--generate_all" };
+                args = new string[] { "--check_balances", "./Uniques/Addresses.txt" };
+            }
+#endif
+
+            string toDo = args.FirstOrDefault();
+            if (string.IsNullOrEmpty(toDo))
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("--generate_all");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\t\tGenerate all address LIKE [??]*[??]");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("--check_balances [File]");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\t\tCheck balances from a file");
+                return;
+            }
+
+            switch (toDo.ToLowerInvariant())
+            {
+                case "--generate_all":
                     {
-                        KeyCreationOptions = CngKeyCreationOptions.None,
-                        KeyUsage = CngKeyUsages.AllUsages,
-                        ExportPolicy = CngExportPolicies.AllowExport | CngExportPolicies.AllowArchiving | CngExportPolicies.AllowPlaintextArchiving | CngExportPolicies.AllowPlaintextExport,
-                        Provider = CngProvider.MicrosoftSoftwareKeyStorageProvider,
-                        UIPolicy = new CngUIPolicy(CngUIProtectionLevels.None),
-                    }))
-                    {
-                        EthAddress e = new EthAddress
-                            (
-                            hkey.Export(CngKeyBlobFormat.EccPrivateBlob).Skip(72).ToArray(),
-                            hkey.Export(CngKeyBlobFormat.EccPublicBlob).Skip(8).ToArray()
-                            );
-
-                        string sub = e.Address.Substring(0, 2) + e.Address.Substring(e.Address.Length - 2, 2);
-
-                        lock (list)
-                        {
-                            if (list.ContainsKey(sub)) continue;
-                            list.Add(sub, e);
-
-                            Console.ForegroundColor = ConsoleColor.White;
-                            Console.Write(e.PrivateKey.ToHex());
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                            Console.WriteLine(" [" + e.Address + "]");
-                            Console.Title = list.Count.ToString();
-                        }
+                        GenerateUniqueAddress.Run();
+                        break;
                     }
-                }
-            };
 
-            Task ta = new Task(a), tb = new Task(a);
+                // https://github.com/ethereum/wiki/wiki/JSON-RPC
+                // geth.exe --datadir "V:\Ethereum" --rpc --rpcaddr 127.0.0.1 --rpcport 8545
 
-            ta.Start();
-            tb.Start();
-
-            Task.WaitAll(ta, tb);
-
-            File.WriteAllLines
-                (
-                "C:\\Temporal\\Keys.txt",
-                list.Values
-                .OrderBy(u => u.Address)
-                .Select(u => u.PrivateKey.ToHex() + " [" + u.Address + "]")
-                );
-            File.WriteAllLines
-                (
-                "C:\\Temporal\\Addresses.txt",
-                list.Values
-                .Select(u => u.Address)
-                .OrderBy(u => u)
-                );
+                case "--check_balances":
+                    {
+                        CheckBalances.Run(args.Skip(1).FirstOrDefault());
+                        break;
+                    }
+            }
         }
     }
 }

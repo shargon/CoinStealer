@@ -21,6 +21,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,10 +35,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.1.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
-      <HintPath>..\packages\BouncyCastle.1.8.1\lib\BouncyCastle.Crypto.dll</HintPath>
+      <HintPath>packages\BouncyCastle.1.8.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,6 +53,26 @@
   <ItemGroup>
     <Compile Include="ByteArrayExtensions.cs" />
     <Compile Include="EthAddress.cs" />
+    <Compile Include="Actions\CheckBalances.cs" />
+    <Compile Include="Actions\GenerateUniqueAddress.cs" />
+    <Compile Include="Ethereum Rpc .NET\Connection\ConnectionOptions.cs" />
+    <Compile Include="Ethereum Rpc .NET\Connection\RpcConnector.cs" />
+    <Compile Include="Ethereum Rpc .NET\Enums.cs" />
+    <Compile Include="Ethereum Rpc .NET\EthereumRpcException.cs" />
+    <Compile Include="Ethereum Rpc .NET\Ethereum\Address.cs" />
+    <Compile Include="Ethereum Rpc .NET\Ethereum\Block.cs" />
+    <Compile Include="Ethereum Rpc .NET\Ethereum\Filter.cs" />
+    <Compile Include="Ethereum Rpc .NET\Ethereum\Log.cs" />
+    <Compile Include="Ethereum Rpc .NET\Ethereum\Whisper.cs" />
+    <Compile Include="Ethereum Rpc .NET\Ethereum\Work.cs" />
+    <Compile Include="Ethereum Rpc .NET\MethodExtension.cs" />
+    <Compile Include="Ethereum Rpc .NET\RpcObjects\RpcMethod.cs" />
+    <Compile Include="Ethereum Rpc .NET\RpcObjects\RpcRequest.cs" />
+    <Compile Include="Ethereum Rpc .NET\RpcObjects\RpcResultBase.cs" />
+    <Compile Include="Ethereum Rpc .NET\RpcObjects\SyncStatus.cs" />
+    <Compile Include="Ethereum Rpc .NET\RpcObjects\Transaction.cs" />
+    <Compile Include="Ethereum Rpc .NET\Service\EtherCurrencyConverter.cs" />
+    <Compile Include="Ethereum Rpc .NET\Service\EthereumService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

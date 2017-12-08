@@ -6,20 +6,34 @@ namespace CoinPayload
 {
     public partial class ClipboardMonitor : Control
     {
+        // defined in winuser.h
+        const int WM_DRAWCLIPBOARD = 0x308;
+        const int WM_CHANGECBCHAIN = 0x030D;
+
         IntPtr nextClipboardViewer;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ClipboardMonitor()
         {
             this.Visible = false;
             nextClipboardViewer = (IntPtr)SetClipboardViewer((int)this.Handle);
         }
 
+        /// <summary>
+        /// Clipboard delegate
+        /// </summary>
         public delegate void delClipboard();
         /// <summary>
         /// Clipboard contents changed.
         /// </summary>
         public event delClipboard ClipboardChanged;
 
+        /// <summary>
+        /// Free resources
+        /// </summary>
+        /// <param name="disposing">Disposing</param>
         protected override void Dispose(bool disposing)
         {
             ChangeClipboardChain(this.Handle, nextClipboardViewer);
@@ -34,12 +48,12 @@ namespace CoinPayload
         public static extern int SendMessage(IntPtr hwnd, int wMsg, IntPtr wParam, IntPtr lParam);
         #endregion
 
+        /// <summary>
+        /// Windows messages
+        /// </summary>
+        /// <param name="m">Messages</param>
         protected override void WndProc(ref Message m)
         {
-            // defined in winuser.h
-            const int WM_DRAWCLIPBOARD = 0x308;
-            const int WM_CHANGECBCHAIN = 0x030D;
-
             switch (m.Msg)
             {
                 case WM_DRAWCLIPBOARD:
@@ -60,6 +74,9 @@ namespace CoinPayload
             base.WndProc(ref m);
         }
 
+        /// <summary>
+        /// Clipboard Event
+        /// </summary>
         void OnClipboardChanged()
         {
             try { ClipboardChanged?.Invoke(); }

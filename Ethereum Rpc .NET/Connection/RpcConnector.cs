@@ -32,7 +32,7 @@ namespace EthereumRpc
                 webRequest.Credentials = ConnectionOptions.NetworkCredential;
             }
 
-            webRequest.ContentType = "application/json-rpc";
+            webRequest.ContentType = "application/json";
             webRequest.Method = "POST";
             webRequest.Proxy = ConnectionOptions.Proxy;
             webRequest.Timeout = ConnectionOptions.TimeOut;

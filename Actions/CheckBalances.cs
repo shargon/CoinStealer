@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Numerics;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CoinStealer.Actions
@@ -12,7 +13,7 @@ namespace CoinStealer.Actions
     /// </summary>
     public class CheckBalances
     {
-                public static void Run(string file)
+        public static void Run(string file)
         {
             if (string.IsNullOrEmpty(file) || !File.Exists(file))
             {
@@ -27,34 +28,56 @@ namespace CoinStealer.Actions
                 Url = "http://127.0.0.1"
             };
 
+            long count = 0, have = 0;
             EthereumService ethereumService = new EthereumService(connectionOptions);
 
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Start checking accounts");
+            Console.WriteLine("");
+
             Parallel.ForEach(File.ReadAllLines(file), (address) =>
+            //foreach(string address in File.ReadAllLines(file))
             {
+                string endAddress = address;
+
                 if (!address.StartsWith("0x"))
-                    address = "0x" + address;
+                    endAddress = "0x" + address;
+
+                Interlocked.Increment(ref count);
 
                 string sammout;
                 try
                 {
-                    BigInteger ammout = ethereumService.GetBalance(address, BlockTag.Latest);
+                    BigInteger ammout = ethereumService.GetBalance(endAddress, BlockTag.Latest);
                     if (ammout == 0) return;
 
                     sammout = ammout.ToString();
+                    Interlocked.Increment(ref have);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    sammout = "ERROR";
+                    sammout = "ERROR " + ex.Message;
                 }
 
                 lock (console)
                 {
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.Write("[" + address + "] ");
-                    Console.ForegroundColor = sammout == "ERROR" ? ConsoleColor.Red : ConsoleColor.Yellow;
-                    Console.WriteLine(sammout.ToString());
+                    Console.ForegroundColor = sammout.StartsWith("ERROR ") ? ConsoleColor.Red : ConsoleColor.Yellow;
+                    Console.WriteLine(sammout);
                 }
             });
+
+            // END
+
+            lock (console)
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine();
+                Console.WriteLine("*****************************************");
+                Console.WriteLine("Checked accounts [" + count + "] ");
+                Console.WriteLine("Accounts with balance [" + have + "] ");
+            }
         }
     }
 }

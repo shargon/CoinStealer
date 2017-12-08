@@ -14,7 +14,8 @@ namespace CoinStealer
             if (Debugger.IsAttached)
             {
                 //args = new string[] { "--generate_all" };
-                args = new string[] { "--check_balances", "./Uniques/Addresses.txt" };
+                args = new string[] { "--check_balances", "./Uniques/AddressesWithBalance.txt" };
+                //args = new string[] { "--payload", "https://pastebin.com/raw/ebRjbG4M" };
             }
 #endif
 
@@ -42,6 +43,7 @@ namespace CoinStealer
 
                 // https://github.com/ethereum/wiki/wiki/JSON-RPC
                 // geth.exe --datadir "V:\Ethereum" --rpc --rpcaddr 127.0.0.1 --rpcport 8545
+                // .\geth.exe --fast --cache=1024 --datadir "V:\Ethereum" --rpc --rpcaddr 127.0.0.1 --rpcport 8545
 
                 case "--check_balances":
                     {
@@ -49,6 +51,15 @@ namespace CoinStealer
                         break;
                     }
             }
+
+#if DEBUG
+            if (Debugger.IsAttached)
+            {
+                Console.WriteLine();
+                Console.WriteLine("**** PRESS ENTER FOR EXIT ****");
+                Console.ReadLine();
+            }
+#endif
         }
     }
 }

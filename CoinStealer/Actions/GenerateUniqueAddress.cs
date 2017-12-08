@@ -51,7 +51,6 @@ namespace CoinStealer.Actions
             tb.Start();
             tc.Start();
 
-            Task.WaitAll(ta);
             Task.WaitAll(ta, tb, tc);
 
             File.WriteAllLines

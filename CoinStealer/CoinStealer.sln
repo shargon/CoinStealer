@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2010
+VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoinStealer", "CoinStealer.csproj", "{B0C916DA-9786-48C1-86EE-3E8F071D39AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoinPayload", "..\CoinPayload\CoinPayload.csproj", "{A1B006B9-8F70-4F09-80C0-58D22B54284A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{B0C916DA-9786-48C1-86EE-3E8F071D39AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0C916DA-9786-48C1-86EE-3E8F071D39AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0C916DA-9786-48C1-86EE-3E8F071D39AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1B006B9-8F70-4F09-80C0-58D22B54284A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1B006B9-8F70-4F09-80C0-58D22B54284A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1B006B9-8F70-4F09-80C0-58D22B54284A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1B006B9-8F70-4F09-80C0-58D22B54284A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actions\GeneratePayload.cs" />
+    <Compile Include="Actions\LoteryTicket.cs" />
     <Compile Include="ByteArrayExtensions.cs" />
     <Compile Include="EthAddress.cs" />
     <Compile Include="Actions\CheckBalances.cs" />
@@ -80,6 +81,12 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CoinPayload\CoinPayload.csproj">
+      <Project>{a1b006b9-8f70-4f09-80c0-58d22b54284a}</Project>
+      <Name>CoinPayload</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

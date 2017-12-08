@@ -48,8 +48,10 @@ namespace CoinStealer.Actions
                 string sammout;
                 try
                 {
+                    long tx = ethereumService.GetTransactionCount(endAddress, BlockTag.Latest);
+                    if (tx == 0) return;
+
                     BigInteger ammout = ethereumService.GetBalance(endAddress, BlockTag.Latest);
-                    if (ammout == 0) return;
 
                     sammout = ammout.ToString();
                     Interlocked.Increment(ref have);
@@ -62,7 +64,7 @@ namespace CoinStealer.Actions
                 lock (console)
                 {
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write("[" + address + "] ");
+                    Console.Write("[" + endAddress + "] ");
                     Console.ForegroundColor = sammout.StartsWith("ERROR ") ? ConsoleColor.Red : ConsoleColor.Yellow;
                     Console.WriteLine(sammout);
                 }

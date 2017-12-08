@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace EthereumRpc
 {
     public class Address
     {
         public string Value { get; set; }
-        private byte[] _bytes;
 
         public Address(string value)
         {

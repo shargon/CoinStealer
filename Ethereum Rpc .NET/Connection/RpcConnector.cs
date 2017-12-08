@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using System.Configuration;
 using System.Security.Policy;
 using EthereumRpc.RpcObjects;
+using System.Net.Cache;
 
 namespace EthereumRpc
 {
@@ -32,6 +33,7 @@ namespace EthereumRpc
                 webRequest.Credentials = ConnectionOptions.NetworkCredential;
             }
 
+            webRequest.CachePolicy = new RequestCachePolicy(RequestCacheLevel.NoCacheNoStore);
             webRequest.ContentType = "application/json";
             webRequest.Method = "POST";
             webRequest.Proxy = ConnectionOptions.Proxy;

@@ -15,7 +15,7 @@ namespace CoinStealer
             {
                 //args = new string[] { "--generate_all" };
                 args = new string[] { "--check_balances", "./Uniques/AddressesWithBalance.txt" };
-                //args = new string[] { "--payload", "https://pastebin.com/raw/ebRjbG4M" };
+                //args = new string[] { "--payload", "https://raw.githubusercontent.com/shargon/CoinStealer/master/Samples/Addresses.txt?token=ADBW5Q7v31YTdQ8wlotdsdV93juszUEmks5aM6pJwA%3D%3D" };
             }
 #endif
 

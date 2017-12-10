@@ -1,5 +1,6 @@
 ﻿using EthereumRpc;
 using System;
+using System.IO;
 using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -47,13 +48,13 @@ namespace CoinStealer.Actions
                     string sammout;
                     try
                     {
+                        //Thread.Sleep(5);
                         Interlocked.Increment(ref have);
 
                         long tx = ethereumService.GetTransactionCount(endAddress, BlockTag.Latest);
                         if (tx == 0) return;
 
                         BigInteger ammout = ethereumService.GetBalance(endAddress, BlockTag.Latest);
-
                         sammout = ammout.ToString();
                     }
                     catch (Exception ex)
@@ -71,6 +72,8 @@ namespace CoinStealer.Actions
                         Console.Write("[" + privKey.ToHex() + "] ");
                         Console.ForegroundColor = sammout.StartsWith("ERROR ") ? ConsoleColor.Red : ConsoleColor.Yellow;
                         Console.WriteLine(sammout);
+
+                        File.AppendAllText("./Lotery.txt", privKey.ToHex() + " " + sammout + Environment.NewLine);
                     }
                 });
             }

